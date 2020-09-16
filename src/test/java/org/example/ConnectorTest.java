@@ -7,6 +7,8 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -39,12 +41,16 @@ public class ConnectorTest extends JerseyTest {
 
     @Test
     public void queryGetTest() {
-        try (Response response = target("basic").path("getquery")
-                .queryParam("first", "hello")
-                .queryParam("second", "world")
-                .request().get()) {
-            Assert.assertEquals(200, response.getStatus());
-            Assert.assertEquals("helloworld", response.readEntity(String.class));
+        for (int i = 0; i != 1000; i++) {
+            try (Response response = target("basic").path("getquery")
+                    .queryParam("first", "hello")
+                    .queryParam("second", "world")
+                    .request().get()) {
+                Assert.assertEquals(200, response.getStatus());
+                Thread current = Thread.currentThread();
+                System.out.append("Thread:").append(current.getName()).println(current.getId());
+                Assert.assertEquals("helloworld", response.readEntity(String.class));
+            }
         }
     }
 }
