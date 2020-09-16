@@ -1,0 +1,20 @@
+dist: trusty
+
+sudo: required
+
+language: java
+
+services:
+  - docker
+
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - .autoconf
+
+install: true
+
+script:
+  - bash mvn clean install
