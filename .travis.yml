@@ -4,17 +4,8 @@ sudo: required
 
 language: java
 
-services:
-  - docker
-
 jdk:
-  - oraclejdk8
-
-cache:
-  directories:
-    - .autoconf
-
-install: true
+  - openjdk11
 
 script:
-  - bash mvn clean install
+  - mvn clean install
